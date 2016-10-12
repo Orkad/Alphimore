@@ -4,12 +4,14 @@ using UnityEngine.UI;
 
 [ExecuteInEditMode]
 public class LocalizedText : MonoBehaviour {
-	public static SystemLanguage language = SystemLanguage.English;
+	public string Before;
+	public string After;
 	public string Fr;
 	public string En;
 
+
 	void Update(){
-		switch (language) {
+		switch (Locale.currentLanguage) {
 		case SystemLanguage.French:
 			SetLabel (Fr);
 			break;
@@ -23,6 +25,6 @@ public class LocalizedText : MonoBehaviour {
 	}
 
 	private void SetLabel(string str){
-		GetComponent<Text> ().text = str;
+		GetComponent<Text> ().text = Before + str + After;
 	}
 }

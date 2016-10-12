@@ -11,7 +11,10 @@ public class Menu : MonoBehaviour {
 	private Menu previousMenu;
 	public Button backButton;
 	public bool center = true;
-	private bool isCurrent;
+	public bool backOnEscape = true;
+	private bool isOpen;
+	private bool isActive;
+
 
 	void Awake(){
 		annimatedUI = gameObject.GetOrAddComponent<AnnimatedUI> ();
@@ -22,32 +25,48 @@ public class Menu : MonoBehaviour {
 			backButton.onClick.AddListener(() => Back());
 	}
 
+	void Update(){
+		if (!isActive || !isOpen)
+			return;
+		if (!backOnEscape)
+			return;
+		if(Input.GetKeyDown(KeyCode.Escape))
+			Back();
+	}
+
 	public void Open(){
 		this.annimatedUI.Show();
-		isCurrent = true;
+		isOpen = true;
+		isActive = true;
 	}
 
 	public void Close(){
+		Hide ();
+		isOpen = false;
+	}
+
+	public void Hide(){
 		annimatedUI.Hide ();
-		isCurrent = false;
+		isActive = false;
 	}
 
 	public void Toogle(){
 		if (annimatedUI.IsShown ()) {
-			if (isCurrent)
+			if (isOpen && isActive)
 				Close ();
-		} else
+		} else if (!isOpen && !isActive)
 			Open ();
 	}
 
 	public void Stack(Menu nextMenu){
-		Close ();
+		Hide ();
 		nextMenu.previousMenu = this;
 		nextMenu.Open ();
 	}
 
 	public void Back(){
 		Close ();
-		previousMenu.annimatedUI.Show();
+		if(previousMenu != null)
+			previousMenu.Open();
 	}
 }
