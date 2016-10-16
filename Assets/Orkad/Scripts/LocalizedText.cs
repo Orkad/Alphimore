@@ -11,7 +11,7 @@ public class LocalizedText : MonoBehaviour {
 
 
 	void Update(){
-		switch (Locale.currentLanguage) {
+		switch (Locale.availableLanguages[Locale.currentLanguageIndex]) {
 		case SystemLanguage.French:
 			SetLabel (Fr);
 			break;
