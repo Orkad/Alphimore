@@ -15,8 +15,10 @@ public class InventorySlot : MonoBehaviour {
 
 	public void SwapWith(InventorySlot slot){
 		InventoryItem swapped = slot.inventoryItem;
-		if(inventoryItem != null)
+		if (inventoryItem != null)
 			slot.ReceiveInventoryItem (inventoryItem);
+		else
+			slot.inventoryItem = null;
 		ReceiveInventoryItem (swapped);
 	}
 }
