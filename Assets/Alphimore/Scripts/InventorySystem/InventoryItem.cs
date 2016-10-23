@@ -32,7 +32,7 @@ public class InventoryItem : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDr
 	}
 
 	public void OnEndDrag(PointerEventData eventData){
-		InventorySlot slotEvent = eventData.pointerEnter.GetComponentInParent<InventorySlot> ();
+		InventorySlot slotEvent = eventData.pointerEnter == null ? null : eventData.pointerEnter.GetComponentInParent<InventorySlot> ();
 		// Si on rencontre un slot vide
 		if (slotEvent != null) {
 			slotEvent.SwapWith (slot);
