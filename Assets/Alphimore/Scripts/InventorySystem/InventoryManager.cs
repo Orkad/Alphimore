@@ -7,6 +7,7 @@ public class InventoryManager : MonoBehaviour {
 	public GridLayoutGroup container;
 	public Character character;
 	public InventorySlot slotPrefab;
+	public InventoryItem itemPrefab;
 	public List<InventorySlot> slots;
 
 	void Start(){
@@ -14,8 +15,11 @@ public class InventoryManager : MonoBehaviour {
 			InventorySlot slot = GameObject.Instantiate(slotPrefab);
 			slot.transform.SetParent (container.transform);
 			slots.Add(slot);
-			if(i < character.items.Count)
-				slot.item = character.items [i];
+			if (i < character.items.Count) {
+				InventoryItem inventoryItem = GameObject.Instantiate (itemPrefab);
+				inventoryItem.item = character.items [i];
+				slot.ReceiveInventoryItem (inventoryItem);
+			}
 		}
 	}
 }

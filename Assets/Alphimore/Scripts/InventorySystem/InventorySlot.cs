@@ -1,23 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class InventorySlot : MonoBehaviour {
-	public Image image;
-	public Text counter;
-	public InventoryItem item;
+	public InventoryItem inventoryItem;
 
-	void Start(){
-		
-	}
-
-	public bool IsEmpty(){
-		return item.count == 0;
-	}
-
-	void Update(){
-		counter.enabled = image.enabled = !IsEmpty ();
-		image.sprite = item.sprite;
-		counter.text = item.count.ToString();
+	public void ReceiveInventoryItem(InventoryItem item){
+		item.transform.SetParent (transform);
+		item.transform.localPosition = new Vector3 (0, 0);
+		inventoryItem = item;
 	}
 }
