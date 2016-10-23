@@ -10,11 +10,13 @@ public class InventorySlot : MonoBehaviour {
 		item.transform.SetParent (transform);
 		item.transform.localPosition = new Vector3 (0, 0);
 		inventoryItem = item;
+		item.slot = this;
 	}
 
 	public void SwapWith(InventorySlot slot){
 		InventoryItem swapped = slot.inventoryItem;
-		slot.ReceiveInventoryItem (inventoryItem);
+		if(inventoryItem != null)
+			slot.ReceiveInventoryItem (inventoryItem);
 		ReceiveInventoryItem (swapped);
 	}
 }

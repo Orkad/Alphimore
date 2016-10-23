@@ -13,10 +13,6 @@ public class InventoryItem : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDr
 		return item.count == 0;
 	}
 
-	void Start(){
-		slot = GetComponentInParent<InventorySlot> ();
-	}
-
 	void Update(){
 		counter.enabled = image.enabled = !IsEmpty ();
 		image.sprite = item.sprite;
@@ -36,9 +32,13 @@ public class InventoryItem : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDr
 	}
 
 	public void OnEndDrag(PointerEventData eventData){
-		if (eventData.pointerEnter.GetComponent<InventorySlot> () != null) {
-			eventData.pointerEnter.GetComponent<InventorySlot> ().ReceiveInventoryItem (this);
-		} else {
+		InventorySlot slotEvent = eventData.pointerEnter.GetComponentInParent<InventorySlot> ();
+		// Si on rencontre un slot vide
+		if (slotEvent != null) {
+			slotEvent.SwapWith (slot);
+		} 
+		// Si on ne rencontre rien
+		else {
 			slot.ReceiveInventoryItem (this);
 		}
 		image.gameObject.GetOrAddComponent<CanvasGroup> ().blocksRaycasts = true;
