@@ -7,9 +7,14 @@ public class InventoryItem : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDr
 	public Image image;
 	public Text counter;
 	public Item item;
+	public InventorySlot slot;
 
 	public bool IsEmpty(){
 		return item.count == 0;
+	}
+
+	void Start(){
+		slot = GetComponentInParent<InventorySlot> ();
 	}
 
 	void Update(){
@@ -22,6 +27,8 @@ public class InventoryItem : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDr
 		transform.position = eventData.position;
 		image.gameObject.GetOrAddComponent<CanvasGroup> ().blocksRaycasts = false;
 		counter.gameObject.GetOrAddComponent<CanvasGroup> ().blocksRaycasts = false;
+		transform.SetParent (transform.parent.parent.parent);
+		transform.SetAsLastSibling ();
 	}
 
 	public void OnDrag(PointerEventData eventData){
@@ -32,7 +39,7 @@ public class InventoryItem : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDr
 		if (eventData.pointerEnter.GetComponent<InventorySlot> () != null) {
 			eventData.pointerEnter.GetComponent<InventorySlot> ().ReceiveInventoryItem (this);
 		} else {
-			transform.localPosition = new Vector3 (0, 0);
+			slot.ReceiveInventoryItem (this);
 		}
 		image.gameObject.GetOrAddComponent<CanvasGroup> ().blocksRaycasts = true;
 		counter.gameObject.GetOrAddComponent<CanvasGroup> ().blocksRaycasts = true;
