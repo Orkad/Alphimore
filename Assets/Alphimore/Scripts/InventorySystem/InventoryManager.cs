@@ -16,11 +16,25 @@ public class InventoryManager : MonoBehaviour {
 			slot.transform.SetParent (container.transform);
 			slot.index = i;
 			slots.Add(slot);
-			if (i < character.items.Count) {
-				InventoryItem inventoryItem = GameObject.Instantiate (itemPrefab);
-				inventoryItem.item = character.items [i];
-				slot.ReceiveInventoryItem (inventoryItem);
-			}
 		}
+		foreach (Item item in character.items) {
+			if (item.inventoryOrder < slots.Count && slots [item.inventoryOrder].inventoryItem == null)
+				CreateInventoryItemForSlot (slots [item.inventoryOrder], item);
+			else
+				CreateInventoryItemForSlot (GetEmptySlot (), item);
+		}
+	}
+
+	InventorySlot GetEmptySlot(){
+		foreach (InventorySlot slot in slots)
+			if (slot.inventoryItem == null)
+				return slot;
+		return null;
+	}
+
+	void CreateInventoryItemForSlot(InventorySlot slot, Item item){
+		InventoryItem inventoryItem = GameObject.Instantiate (itemPrefab);
+		inventoryItem.item = item;
+		slot.ReceiveInventoryItem (inventoryItem);
 	}
 }
