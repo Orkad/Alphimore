@@ -7,6 +7,12 @@ public class Character : MonoBehaviour {
 	public string characterName;
 	public List<Item> items;
 	public int inventorySize = 10;
+	public Item headItem;
+	public Item weaponItem;
+	public Item corpseItem;
+	public Item feetItem;
+	public Item legItem;
+	public Item specialItem;
 
 	void Start(){
 		me = this;
