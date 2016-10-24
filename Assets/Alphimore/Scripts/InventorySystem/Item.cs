@@ -8,4 +8,5 @@ public class Item{
 	public string description;
 	public Sprite sprite;
 	public int count;
+	public int inventoryOrder;
 }

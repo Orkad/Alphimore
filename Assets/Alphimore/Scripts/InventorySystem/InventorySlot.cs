@@ -3,14 +3,16 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class InventorySlot : MonoBehaviour {
+public class InventorySlot : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHandler {
 	public InventoryItem inventoryItem;
+	public int index;
 
-	public void ReceiveInventoryItem(InventoryItem item){
-		item.transform.SetParent (transform);
-		item.transform.localPosition = new Vector3 (0, 0);
-		inventoryItem = item;
-		item.slot = this;
+	public void ReceiveInventoryItem(InventoryItem invItem){
+		invItem.transform.SetParent (transform);
+		invItem.transform.localPosition = new Vector3 (0, 0);
+		inventoryItem = invItem;
+		inventoryItem.slot = this;
+		inventoryItem.item.inventoryOrder = index;
 	}
 
 	public void SwapWith(InventorySlot slot){
@@ -20,5 +22,33 @@ public class InventorySlot : MonoBehaviour {
 		else
 			slot.inventoryItem = null;
 		ReceiveInventoryItem (swapped);
+	}
+
+	public void OnBeginDrag (PointerEventData eventData){
+		if (inventoryItem == null)
+			return;
+		inventoryItem.transform.position = eventData.position;
+		inventoryItem.transform.SetParent (transform.parent.parent.parent);
+		inventoryItem.transform.SetAsLastSibling ();
+	}
+
+	public void OnDrag(PointerEventData eventData){
+		if (inventoryItem == null)
+			return;
+		inventoryItem.transform.position = eventData.position;
+	}
+
+	public void OnEndDrag(PointerEventData eventData){
+		if (inventoryItem == null)
+			return;
+		InventorySlot other = eventData.pointerEnter == null ? null : eventData.pointerEnter.GetComponentInParent<InventorySlot> ();
+		// Si on rencontre un slot vide
+		if (other != null) {
+			other.SwapWith (this);
+		} 
+		// Si on ne rencontre rien
+		else {
+			ReceiveInventoryItem (inventoryItem);
+		}
 	}
 }

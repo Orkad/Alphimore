@@ -14,6 +14,7 @@ public class InventoryManager : MonoBehaviour {
 		for (int i = 0; i < character.inventorySize; i++) {
 			InventorySlot slot = GameObject.Instantiate(slotPrefab);
 			slot.transform.SetParent (container.transform);
+			slot.index = i;
 			slots.Add(slot);
 			if (i < character.items.Count) {
 				InventoryItem inventoryItem = GameObject.Instantiate (itemPrefab);
