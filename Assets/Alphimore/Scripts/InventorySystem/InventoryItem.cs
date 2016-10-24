@@ -20,6 +20,7 @@ public class InventoryItem : MonoBehaviour {
 	void Update(){
 		counter.enabled = image.enabled = !IsEmpty ();
 		image.sprite = item.sprite;
-		counter.text = item.count.ToString();
+		if(item.count != 1)
+			counter.text = item.count.ToString();
 	}
 }
