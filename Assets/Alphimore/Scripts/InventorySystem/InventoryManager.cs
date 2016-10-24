@@ -8,6 +8,7 @@ public class InventoryManager : MonoBehaviour {
 	public Character character;
 	public InventorySlot slotPrefab;
 	public InventoryItem itemPrefab;
+	public InventoryItemTooltip tooltip;
 	public List<InventorySlot> slots;
 
 	void Start(){

@@ -9,7 +9,7 @@ public class AnnimatedUI_Fader : AnnimatedUI {
 	protected CanvasGroup canvasGroup;
 
 	void Awake(){
-		canvasGroup = gameObject.AddComponent<CanvasGroup> ();
+		canvasGroup = gameObject.GetOrAddComponent<CanvasGroup> ();
 		rectTransform = gameObject.GetComponent<RectTransform> ();
 		canvasGroup.alpha = Convert.ToSingle(show);
 	}

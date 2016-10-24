@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class InventorySlot : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHandler {
+public class InventorySlot : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHandler,IPointerEnterHandler,IPointerExitHandler {
 	public InventoryItem inventoryItem;
 	public int index;
 
@@ -50,5 +50,17 @@ public class InventorySlot : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDr
 		else {
 			ReceiveInventoryItem (inventoryItem);
 		}
+	}
+
+	public void OnPointerEnter (PointerEventData eventData)
+	{
+		if (inventoryItem != null) {
+			InventoryItemTooltip.instance.ShowItemTooltip (inventoryItem.item);
+			InventoryItemTooltip.instance.transform.position = eventData.position;
+		}
+	}
+	public void OnPointerExit (PointerEventData eventData)
+	{
+		InventoryItemTooltip.instance.HideTooltip ();
 	}
 }
