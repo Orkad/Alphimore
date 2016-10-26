@@ -7,7 +7,6 @@ public class InventoryManager : MonoBehaviour {
 	public GridLayoutGroup container;
 	public Character character;
 	public InventorySlot slotPrefab;
-	public InventoryItem itemPrefab;
 	public InventoryItemTooltip tooltip;
 	public List<InventorySlot> slots;
 
@@ -19,23 +18,17 @@ public class InventoryManager : MonoBehaviour {
 			slots.Add(slot);
 		}
 		foreach (Item item in character.items) {
-			if (item.inventoryOrder < slots.Count && slots [item.inventoryOrder].inventoryItem == null)
-				CreateInventoryItemForSlot (slots [item.inventoryOrder], item);
+			if (item.inventoryOrder < slots.Count && slots [item.inventoryOrder].getItem() == null)
+				slots [item.inventoryOrder].SetItem (item);
 			else
-				CreateInventoryItemForSlot (GetEmptySlot (), item);
+				GetEmptySlot ().SetItem(item);
 		}
 	}
 
 	InventorySlot GetEmptySlot(){
 		foreach (InventorySlot slot in slots)
-			if (slot.inventoryItem == null)
+			if (slot.getItem() == null)
 				return slot;
 		return null;
-	}
-
-	void CreateInventoryItemForSlot(InventorySlot slot, Item item){
-		InventoryItem inventoryItem = GameObject.Instantiate (itemPrefab);
-		inventoryItem.item = item;
-		slot.ReceiveInventoryItem (inventoryItem);
 	}
 }

@@ -4,59 +4,80 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class InventorySlot : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHandler,IPointerEnterHandler,IPointerExitHandler {
-
-	public InventoryItem inventoryItem;
+	public Vector2 itemSize = new Vector2(30,30);
+	private RectTransform rectTransform;
+	private Item item;
 	public int index;
+	public GameObject itemGraphics;
 
-	public void ReceiveInventoryItem(InventoryItem invItem){
-		invItem.transform.SetParent (transform);
-		invItem.transform.localPosition = new Vector3 (0, 0);
-		inventoryItem = invItem;
-		inventoryItem.slot = this;
-		inventoryItem.item.inventoryOrder = index;
+	void Awake(){
+		rectTransform = GetComponent<RectTransform> ();
+	}
+
+	void CreateItemGraphics(){
+		if (item == null)
+			return;
+		GameObject itemGraphics = new GameObject ();
+		Image image = itemGraphics.AddComponent<Image> ();
+		itemGraphics.transform.SetParent (transform, false);
+		image.rectTransform.sizeDelta = new Vector2 (itemSize.x, itemSize.y);
+		image.sprite = item.sprite;
+		image.preserveAspect = true;
+		this.itemGraphics = itemGraphics;
+	}
+
+	public void SetItem(Item newItem){
+		if (item != null)
+			Destroy (itemGraphics);
+		this.item = newItem;
+		CreateItemGraphics ();
+	}
+
+	public Item getItem(){
+		return item;
 	}
 
 	public void SwapWith(InventorySlot slot){
-		InventoryItem swapped = slot.inventoryItem;
-		if (inventoryItem != null)
-			slot.ReceiveInventoryItem (inventoryItem);
-		else
-			slot.inventoryItem = null;
-		ReceiveInventoryItem (swapped);
+		Item swapped = slot.item;
+		slot.SetItem (item);
+		SetItem (swapped);
 	}
 
 	public void OnBeginDrag (PointerEventData eventData){
-		if (inventoryItem == null)
+		if (item == null)
 			return;
-		inventoryItem.transform.position = eventData.position;
-		inventoryItem.transform.SetParent (transform.parent.parent.parent);
-		inventoryItem.transform.SetAsLastSibling ();
+		itemGraphics.transform.position = eventData.position;
+		itemGraphics.transform.SetParent (transform.parent.parent.parent);
+		itemGraphics.transform.SetAsLastSibling ();
 	}
 
 	public void OnDrag(PointerEventData eventData){
-		if (inventoryItem == null)
+		if (item == null)
 			return;
-		inventoryItem.transform.position = eventData.position;
+		itemGraphics.transform.position = eventData.position;
+		itemGraphics.AddComponent<CanvasGroup> ().blocksRaycasts = false;
 	}
 
 	public void OnEndDrag(PointerEventData eventData){
-		if (inventoryItem == null)
+		if (item == null)
 			return;
 		InventorySlot other = eventData.pointerEnter == null ? null : eventData.pointerEnter.GetComponentInParent<InventorySlot> ();
 		// Si on rencontre un slot vide
 		if (other != null) {
+			itemGraphics.transform.SetParent (transform);
 			other.SwapWith (this);
 		} 
 		// Si on ne rencontre rien
 		else {
-			ReceiveInventoryItem (inventoryItem);
+			itemGraphics.transform.SetParent (transform);
+			itemGraphics.transform.localPosition = new Vector2 (0, 0);
 		}
 	}
 
 	public void OnPointerEnter (PointerEventData eventData)
 	{
-		if (inventoryItem != null) {
-			InventoryItemTooltip.instance.ShowItemTooltip (inventoryItem.item);
+		if (item != null) {
+			InventoryItemTooltip.instance.ShowItemTooltip (item);
 			InventoryItemTooltip.instance.transform.position = eventData.position;
 		}
 	}
