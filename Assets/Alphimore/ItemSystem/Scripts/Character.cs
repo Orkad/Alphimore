@@ -6,7 +6,6 @@ public class Character : MonoBehaviour {
 	public ItemAsset itemAsset;
 	public static Character me;
 	public string characterName;
-	public List<Item> items;
 	public int inventorySize = 10;
 	public Item headItem;
 	public Item weaponItem;
@@ -17,6 +16,5 @@ public class Character : MonoBehaviour {
 
 	void Awake(){
 		me = this;
-		items = itemAsset.itemList;
 	}
 }
