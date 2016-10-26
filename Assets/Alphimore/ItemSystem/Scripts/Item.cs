@@ -2,8 +2,8 @@
 using System.Collections;
 using System;
 
-[Serializable]
-public class Item{
+
+public class Item : ScriptableObject{
 	public string name;
 	public string description;
 	public Sprite sprite;

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
 public class Character : MonoBehaviour {
 	public ItemAsset itemAsset;
 	public static Character me;
