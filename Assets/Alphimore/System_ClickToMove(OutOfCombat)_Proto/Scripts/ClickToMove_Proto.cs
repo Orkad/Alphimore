@@ -35,36 +35,46 @@ public class ClickToMove_Proto : MonoBehaviour
 	void Update () 
 	{
 		MoveManagement ();
+
+    Debug.DrawLine(_targetPosition, _targetPosition + Vector3.up * 4f, Color.red);
 	}
 	#endregion
 
 	#region function SetTargetPosition
 	private void SetTargetPosition()
 	{
-		_plane = new Plane (Vector3.up, transform.position);
-		_ray = Camera.main.ScreenPointToRay (Input.mousePosition); //Get position mouse screen
+		//_plane = new Plane (Vector3.up, transform.position);
+		//_ray = Camera.main.ScreenPointToRay (Input.mousePosition); //Get position mouse screen
 
-		if (_plane.Raycast (_ray, out _point))
+    RaycastHit hitInfo;
+    
+		if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo))
 		{
-			_targetPosition = _ray.GetPoint (_point);
-		}
+      _targetPosition = hitInfo.point;// _ray.GetPoint (_point);
+      _isMoving = true;
 
-		_isMoving = true;
-	}
+    }
+
+  }
 	#endregion
 
 	#region function MovingPlayer
 	private void MovingPlayer()
 	{
 		//The character is rotated to be facing the target displacement.
-		transform.LookAt (_targetPosition);
+    Vector3 MoveToPosition = new Vector3(_targetPosition.x, transform.position.y, _targetPosition.z);
+    transform.LookAt (MoveToPosition);
 		//The navmeshagent the path to the selected destination (where you click with the mouse).
-		_navAgent.SetDestination(_targetPosition);
+		_navAgent.SetDestination(MoveToPosition);
 
-		if (transform.position == _targetPosition)
+		if (Mathf.Abs((MoveToPosition-transform.position).magnitude) < 0.2f)
 		{
-			_isMoving = false;
-		}
+      if (_isMoving)
+      {
+        _isMoving = false;
+      }
+
+    }
 
 		Debug.DrawLine (transform.position, _targetPosition, Color.red);
 	}
