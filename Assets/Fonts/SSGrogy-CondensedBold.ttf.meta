@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: eed415f173c10fa4e81203acdd2a6de0
+timeCreated: 1477745631
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - SS_Grogy
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 9d494a702f8788945b5b520e3278ba61, type: 3}
+  - {fileID: 12800000, guid: 2776613d80ed9444f88d6ae099506366, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

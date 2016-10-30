@@ -63,7 +63,7 @@ public class ClickToMove_Proto : MonoBehaviour
 	{
 		//The character is rotated to be facing the target displacement.
     Vector3 MoveToPosition = new Vector3(_targetPosition.x, transform.position.y, _targetPosition.z);
-    transform.LookAt (MoveToPosition);
+    //transform.LookAt (MoveToPosition);
 		//The navmeshagent the path to the selected destination (where you click with the mouse).
 		_navAgent.SetDestination(MoveToPosition);
 
