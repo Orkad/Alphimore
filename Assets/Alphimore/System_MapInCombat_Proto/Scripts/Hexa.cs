@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class Hexa : MonoBehaviour
 {
 	private Renderer _rend;
@@ -40,7 +41,7 @@ public class Hexa : MonoBehaviour
 
 	void OnMouseExit()
 	{
-		_rend.material.color = Color.white;
+    _rend.material.color = new Color(1, 1, 1, 0.35f);
 	}
 
   public void UpdateHexa(Hexa LinkedHexa, HexConnexion type)
@@ -70,4 +71,6 @@ public class Hexa : MonoBehaviour
     }
 
   }
+
+
 }
