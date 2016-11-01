@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class GridManager : MonoBehaviour
 {
 	#region Variables
 	//Variables contains the hexagone prefab.
-	[SerializeField] private Transform hexPrefab;
+	public GameObject hexPrefab;
 
 	// Variables contains the dimensions of the Grid
 	[SerializeField] private int gridWidth = 11;
@@ -20,15 +21,34 @@ public class GridManager : MonoBehaviour
 
 	//Variables contains the start position of the grid.
 	private Vector3 _startPos;
+
+  private bool IsShown = false;
+
+  public List<GameObject> GridList;
 	#endregion
 
-	#region fucntion Start
+	#region fucntion Start_Update
 	void Start()
 	{
 		AddGap();
 		CalcStartPosGrid();
 		CreateGrid();
-	}
+
+    IsShown = true;
+
+  }
+
+  void Update()
+  {
+    if (Input.GetKeyUp(KeyCode.G ))
+    {
+      IsShown ^= true;
+      for (int i = 0; i < GridList.Count; i++)
+      {
+        GridList[i].SetActive(IsShown);
+      }
+    }
+  }
 	#endregion
 
 	#region function AddGap
@@ -70,24 +90,32 @@ public class GridManager : MonoBehaviour
 		float z = _startPos.z - gridPos.y * hexHeight * 0.75f;
 
 		//Return position x, y, z of the grid
-		return new Vector3(x, 0.1f, z);
+		return new Vector3(x, transform.position.y, z);
 	}
 	#endregion
 
 	#region function CreateGrid
 	private void CreateGrid()
 	{
-		for (int y = 0; y < gridHeight; y++)
+    GridList = new List<GameObject>();
+
+    for (int y = 0; y < gridHeight; y++)
 		{
 			for (int x = 0; x < gridWidth; x++)
 			{
-				Transform hex = Instantiate(hexPrefab) as Transform;
-				Vector2 gridPos = new Vector2(x, y);
-				hex.position = CalcWorldPos(gridPos);
-				hex.parent = this.transform;
+				GameObject hex =  Instantiate(hexPrefab, CalcWorldPos(new Vector2(x, y)),Quaternion.FromToRotation(Vector3.forward,Vector3.up), this.transform) as GameObject;
+				/*Vector2 gridPos = new Vector2(x, y);
+				hex.transform.position = CalcWorldPos(gridPos);
+				hex.transform.parent = this.transform;*/
 				hex.name = "Hexagon" + x + "|" + y;
-			}
+        hex.GetComponent<Hexa>().MapPosX = x;
+        hex.GetComponent<Hexa>().MapPosY = y;
+        GridList.Add(hex);
+
+      }
 		}
-	}
+
+
+  }
 	#endregion
 }
