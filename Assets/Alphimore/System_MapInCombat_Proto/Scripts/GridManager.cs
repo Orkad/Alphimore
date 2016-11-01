@@ -8,12 +8,12 @@ public class GridManager : MonoBehaviour
 	public GameObject hexPrefab;
 
 	// Variables contains the dimensions of the Grid
-	[SerializeField] private int gridWidth = 11;
-	[SerializeField] private int gridHeight = 11;
+	public int gridWidth = 11;
+	public int gridHeight = 11;
 
 	//Variables contains the sizes of the one hexagone.
-	private float hexWidth = 1.732f;
-	private float hexHeight = 2.0f;
+	public float hexWidth = 2.0f;
+	public float hexHeight = 2.0f;
 
 	//Variables contains the gaps between the hexas.
 	[SerializeField] private float gap = 0.0f;
