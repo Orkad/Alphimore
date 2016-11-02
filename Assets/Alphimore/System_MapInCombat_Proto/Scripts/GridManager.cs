@@ -30,9 +30,8 @@ public class GridManager : MonoBehaviour
 	#region fucntion Start_Update
 	void Start()
 	{
-		AddGap();
-		CalcStartPosGrid();
-		CreateGrid();
+
+		//CreateGrid();
 
     IsShown = true;
 
@@ -95,22 +94,65 @@ public class GridManager : MonoBehaviour
 	#endregion
 
 	#region function CreateGrid
-	private void CreateGrid()
+  public void ClearGrid()
+  {
+    if (GridList != null)
+    {
+      for (int i = 0; i < GridList.Count; i++)
+      {
+        DestroyImmediate(GridList[i]);
+      }
+      GridList.Clear();
+    }
+  }
+
+  public void DeleteOneGrid(string name)
+  {
+    if (GridList != null)
+    {
+      for (int i = 0; i < GridList.Count; i++)
+      {
+        if (GridList[i].name == name)
+        {
+
+          DestroyImmediate(GridList[i]);
+          GridList.RemoveAt(i);
+          break;
+        }
+      }
+    }
+  }
+
+  public void CreateGrid()
 	{
-    GridList = new List<GameObject>();
+    if (GridList != null)
+    {
+      for (int i = 0; i < GridList.Count; i++)
+      {
+        DestroyImmediate(GridList[i]);
+      }
+      GridList.Clear();
+    }
+    else
+      GridList = new List<GameObject>();
+
+
+    hexWidth = 1.732f;
+    hexHeight = 2.0f;
+    AddGap();
+    CalcStartPosGrid();
 
     for (int y = 0; y < gridHeight; y++)
 		{
 			for (int x = 0; x < gridWidth; x++)
 			{
-				GameObject hex =  Instantiate(hexPrefab, CalcWorldPos(new Vector2(x, y)),Quaternion.FromToRotation(Vector3.forward,Vector3.up)) as GameObject;
-				hex.transform.SetParent (transform);
+				GameObject hex =  Instantiate(hexPrefab, CalcWorldPos(new Vector2(x, y)),Quaternion.FromToRotation(Vector3.forward,Vector3.up), this.transform) as GameObject;
 				/*Vector2 gridPos = new Vector2(x, y);
 				hex.transform.position = CalcWorldPos(gridPos);
 				hex.transform.parent = this.transform;*/
 				hex.name = "Hexagon" + x + "|" + y;
-        hex.GetComponent<Hexa>().MapPosX = x;
-        hex.GetComponent<Hexa>().MapPosY = y;
+        //hex.GetComponent<Hexa>().MapPosX = x;
+        //hex.GetComponent<Hexa>().MapPosY = y;
         GridList.Add(hex);
 
       }
@@ -118,5 +160,6 @@ public class GridManager : MonoBehaviour
 
 
   }
-	#endregion
+  #endregion
+
 }
