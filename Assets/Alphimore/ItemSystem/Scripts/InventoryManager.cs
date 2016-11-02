@@ -5,37 +5,40 @@ using System.Collections.Generic;
 using System;
 
 public class InventoryManager : MonoBehaviour {
-	public GridLayoutGroup container;
-	public Character character;
+	[Header("Data Definition")]
+	public List<ItemInventory> inventory;
+	public int inventorySize = 20;
+
+	[Header("Assets References")]
+	public ItemAsset itemDatabase;
 	public InventorySlot slotPrefab;
+
+	[Header("Scene References")]
+	public GridLayoutGroup container;
 	public InventoryItemTooltip tooltip;
-	public List<InventorySlot> slots;
-	public ItemAsset itemAsset;
-	[TextArea]
-	public string json;
+
+	private List<InventorySlot> slots = new List<InventorySlot> ();
+
 
 	void Start(){
-		for (int i = 0; i < character.inventorySize; i++) {
+		for (int i = 0; i < inventorySize; i++) {
 			InventorySlot slot = GameObject.Instantiate(slotPrefab);
 			slot.transform.SetParent (container.transform);
 			slot.index = i;
 			slots.Add(slot);
 		}
-		ItemInventoryCollection lst = JsonUtility.FromJson <ItemInventoryCollection> (json);
-		foreach (ItemInventory i in lst.items) {
-			Item item = itemAsset.itemList[i.item + 1];
+
+		foreach (ItemInventory i in inventory) {
+			Item item = itemDatabase.itemList[i.item - 1];
 			if (i.inventory_position < slots.Count && slots [i.inventory_position].getItem () == null)
 				slots [i.inventory_position].SetItem (item);
 			else
 				GetEmptySlot ().SetItem (item);
 		}
-		/*
-		foreach (Item item in character.items) {
-			if (item.inventoryOrder < slots.Count && slots [item.inventoryOrder].getItem() == null)
-				slots [item.inventoryOrder].SetItem (item);
-			else
-				GetEmptySlot ().SetItem(item);
-		}*/
+	}
+
+	static ItemInventoryCollection LoadItemInventoryCollectionFromJson(string json){
+		return JsonUtility.FromJson <ItemInventoryCollection> (json);
 	}
 
 	InventorySlot GetEmptySlot(){
@@ -46,12 +49,6 @@ public class InventoryManager : MonoBehaviour {
 	}
 }
 
-[Serializable]
-public class ItemInventory{
-	public int item;
-	public int inventory_position;
-	public int amount;
-}
 
 [Serializable]
 public class ItemInventoryCollection{

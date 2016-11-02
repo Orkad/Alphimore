@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 798b48e278aea554e9cc6f344340f96e
+timeCreated: 1478045845
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - itemDatabase: {fileID: 11400000, guid: 7aa2b9b70b56e6247b799d4ef4078f8b, type: 2}
+  - slotPrefab: {fileID: 114000013730679954, guid: b0358652728e33648a5891b301f59519,
+      type: 2}
+  - container: {instanceID: 0}
+  - tooltip: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
