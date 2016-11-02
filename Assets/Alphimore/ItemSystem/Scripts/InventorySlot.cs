@@ -55,7 +55,7 @@ public class InventorySlot : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDr
 		if (item == null)
 			return;
 		itemGraphics.transform.position = eventData.position;
-		itemGraphics.AddComponent<CanvasGroup> ().blocksRaycasts = false;
+		itemGraphics.GetOrAddComponent<CanvasGroup> ().blocksRaycasts = false;
 	}
 
 	public void OnEndDrag(PointerEventData eventData){
