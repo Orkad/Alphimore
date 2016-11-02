@@ -146,7 +146,8 @@ public class GridManager : MonoBehaviour
 		{
 			for (int x = 0; x < gridWidth; x++)
 			{
-				GameObject hex =  Instantiate(hexPrefab, CalcWorldPos(new Vector2(x, y)),Quaternion.FromToRotation(Vector3.forward,Vector3.up), this.transform) as GameObject;
+				GameObject hex =  Instantiate(hexPrefab, CalcWorldPos(new Vector2(x, y)),Quaternion.FromToRotation(Vector3.forward,Vector3.up)) as GameObject;
+				hex.transform.SetParent (transform);
 				/*Vector2 gridPos = new Vector2(x, y);
 				hex.transform.position = CalcWorldPos(gridPos);
 				hex.transform.parent = this.transform;*/
