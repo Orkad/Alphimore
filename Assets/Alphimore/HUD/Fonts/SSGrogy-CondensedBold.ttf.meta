@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: e23ed2a797f5467458bfd63dfa3f505f
-timeCreated: 1477528226
+guid: e45d04de63056834dbf810de028eadb7
+timeCreated: 1477990075
 licenseType: Free
 TrueTypeFontImporter:
   serializedVersion: 4
@@ -12,8 +12,8 @@ TrueTypeFontImporter:
   fontNames:
   - SS_Grogy
   fallbackFontReferences:
-  - {fileID: 12800000, guid: bd159f8b7d8831c4c97024810b02c68c, type: 3}
-  - {fileID: 12800000, guid: 064b3abf74342b24f820edfd863a75dc, type: 3}
+  - {fileID: 12800000, guid: 1c383522d4637f746b329b71168787fa, type: 3}
+  - {fileID: 12800000, guid: 4a020b8c4497cdb40be4122f82a9f650, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
