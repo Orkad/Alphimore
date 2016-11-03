@@ -4,7 +4,8 @@ using UnityEngine.Events;
 using System;
 
 public class AnnimatedUI_Fader : AnnimatedUI {
-
+	public bool drivenBlocksRaycasts = true;
+	public bool drivenInteractable = true;
 	protected RectTransform rectTransform;
 	protected CanvasGroup canvasGroup;
 
