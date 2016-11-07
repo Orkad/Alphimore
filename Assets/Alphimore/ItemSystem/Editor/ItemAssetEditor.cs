@@ -3,9 +3,6 @@ using System.Collections;
 using UnityEditor;
 using System.Collections.Generic;
 
-//Creates a custom Label on the inspector for all the scripts named ScriptName
-// Make sure you have a ScriptName script in your
-// project, else this will not work.
 [CustomEditor(typeof(ItemAsset))]
 public class TestOnInspector : Editor
 {

@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 public class InventoryManager : MonoBehaviour {
 	[Header("Data Definition")]
@@ -11,21 +12,20 @@ public class InventoryManager : MonoBehaviour {
 
 	[Header("Assets References")]
 	public ItemAsset itemDatabase;
-	public InventorySlot slotPrefab;
+	public InventoryItemSlot ItemSlotPrefab;
 
 	[Header("Scene References")]
 	public GridLayoutGroup container;
 	public InventoryItemTooltip tooltip;
 
-	private List<InventorySlot> slots = new List<InventorySlot> ();
+	private readonly List<InventoryItemSlot> slots = new List<InventoryItemSlot> ();
 
 
 	void Start(){
 		for (int i = 0; i < inventorySize; i++) {
-			InventorySlot slot = GameObject.Instantiate(slotPrefab);
-			slot.transform.SetParent (container.transform);
-			slot.index = i;
-			slots.Add(slot);
+			InventoryItemSlot itemSlot = GameObject.Instantiate(ItemSlotPrefab);
+			itemSlot.transform.SetParent (container.transform);
+			slots.Add(itemSlot);
 		}
 
 		foreach (ItemInventory i in inventory) {
@@ -41,11 +41,9 @@ public class InventoryManager : MonoBehaviour {
 		return JsonUtility.FromJson <ItemInventoryCollection> (json);
 	}
 
-	InventorySlot GetEmptySlot(){
-		foreach (InventorySlot slot in slots)
-			if (slot.getItem() == null)
-				return slot;
-		return null;
+	InventoryItemSlot GetEmptySlot()
+	{
+	    return slots.FirstOrDefault(slot => slot.getItem() == null);
 	}
 }
 
