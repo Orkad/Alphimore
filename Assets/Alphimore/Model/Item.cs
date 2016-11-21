@@ -15,7 +15,9 @@ public enum ItemType
 }
 
 [Serializable]
-public class Item{
+public class Item
+{
+    public int id;
 	public string name;
 	public string description;
 	public Sprite sprite;

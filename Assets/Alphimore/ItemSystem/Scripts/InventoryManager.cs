@@ -29,7 +29,7 @@ public class InventoryManager : MonoBehaviour {
 		}
 
 		foreach (ItemInventory i in inventory) {
-			Item item = itemDatabase.itemList[i.item - 1];
+			Item item = itemDatabase.itemList[i.item.id - 1];
 			if (i.inventory_position < slots.Count && slots [i.inventory_position].getItem () == null)
 				slots [i.inventory_position].SetItem (item);
 			else
