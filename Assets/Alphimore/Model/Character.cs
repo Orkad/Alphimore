@@ -1,12 +1,12 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 
 [Serializable]
-public class Character
+public class Character:MonoBehaviour
 {
-    public int id;
     public string name;
     public CharacterInventory characterInventory;
     public CharacterEquipment equipement;

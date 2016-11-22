@@ -37,6 +37,11 @@ public class InventoryManager : MonoBehaviour {
 		}
 	}
 
+    void Fill(ItemInventory itemInventory)
+    {
+        
+    }
+
 	static ItemInventoryCollection LoadItemInventoryCollectionFromJson(string json){
 		return JsonUtility.FromJson <ItemInventoryCollection> (json);
 	}
